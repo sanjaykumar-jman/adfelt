@@ -1,0 +1,9 @@
+{
+	"name": "eltadf",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "757e78eb-1413-43bf-a51d-46950a6d4d8a",
+		"tenantId": "2800c0a0-70e9-49be-8733-faeaa6aced99"
+	}
+}

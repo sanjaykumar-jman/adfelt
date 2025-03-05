@@ -1,0 +1,36 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "currency",
+				"type": "varchar"
+			},
+			{
+				"name": "month",
+				"type": "date"
+			},
+			{
+				"name": "to_currency",
+				"type": "varchar"
+			},
+			{
+				"name": "exchange_rate",
+				"type": "decimal",
+				"precision": 15,
+				"scale": 4
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "exchange_rates"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
