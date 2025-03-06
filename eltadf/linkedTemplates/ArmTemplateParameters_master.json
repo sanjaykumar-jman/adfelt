@@ -17,6 +17,9 @@
 		"blob_storage_source_connectionString": {
 			"value": ""
 		},
+		"json_db_dest_password": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
 		},
@@ -35,8 +38,17 @@
 		"AzureSqlDatabase2_properties_typeProperties_userName": {
 			"value": "sanjay"
 		},
+		"json_db_dest_properties_typeProperties_server": {
+			"value": "eltdbserver.database.windows.net"
+		},
+		"json_db_dest_properties_typeProperties_database": {
+			"value": "eltdb"
+		},
+		"json_db_dest_properties_typeProperties_userName": {
+			"value": "sanjay"
+		},
 		"rest_source_properties_typeProperties_url": {
-			"value": "https://api.restful-api.dev/"
+			"value": "https://jsonplaceholder.typicode.com/"
 		},
 		"containerUri": {
 			"value": ""

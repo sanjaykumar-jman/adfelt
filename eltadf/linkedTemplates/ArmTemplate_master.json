@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_source'"
 		},
+		"json_db_dest_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'json_db_dest'"
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -47,9 +51,21 @@
 			"type": "string",
 			"defaultValue": "sanjay"
 		},
+		"json_db_dest_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "eltdbserver.database.windows.net"
+		},
+		"json_db_dest_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "eltdb"
+		},
+		"json_db_dest_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sanjay"
+		},
 		"rest_source_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.restful-api.dev/"
+			"defaultValue": "https://jsonplaceholder.typicode.com/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -90,6 +106,9 @@
 					"blob_storage_source_connectionString": {
 						"value": "[parameters('blob_storage_source_connectionString')]"
 					},
+					"json_db_dest_password": {
+						"value": "[parameters('json_db_dest_password')]"
+					},
 					"AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
 					},
@@ -107,6 +126,15 @@
 					},
 					"AzureSqlDatabase2_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]"
+					},
+					"json_db_dest_properties_typeProperties_server": {
+						"value": "[parameters('json_db_dest_properties_typeProperties_server')]"
+					},
+					"json_db_dest_properties_typeProperties_database": {
+						"value": "[parameters('json_db_dest_properties_typeProperties_database')]"
+					},
+					"json_db_dest_properties_typeProperties_userName": {
+						"value": "[parameters('json_db_dest_properties_typeProperties_userName')]"
 					},
 					"rest_source_properties_typeProperties_url": {
 						"value": "[parameters('rest_source_properties_typeProperties_url')]"

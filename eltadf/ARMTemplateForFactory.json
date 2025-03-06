@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage_source'"
 		},
+		"json_db_dest_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'json_db_dest'"
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -47,9 +51,21 @@
 			"type": "string",
 			"defaultValue": "sanjay"
 		},
+		"json_db_dest_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "eltdbserver.database.windows.net"
+		},
+		"json_db_dest_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "eltdb"
+		},
+		"json_db_dest_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sanjay"
+		},
 		"rest_source_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.restful-api.dev/"
+			"defaultValue": "https://jsonplaceholder.typicode.com/"
 		}
 	},
 	"variables": {
@@ -201,7 +217,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "RestResource1",
+								"referenceName": "rest_src_ds",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -221,8 +237,196 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
+				"[concat(variables('factoryId'), '/datasets/rest_src_ds')]",
 				"[concat(variables('factoryId'), '/datasets/Json1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/rest_to_db')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['name']"
+										},
+										"sink": {
+											"name": "name"
+										}
+									},
+									{
+										"source": {
+											"path": "$['username']"
+										},
+										"sink": {
+											"name": "username"
+										}
+									},
+									{
+										"source": {
+											"path": "$['email']"
+										},
+										"sink": {
+											"name": "email"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['street']"
+										},
+										"sink": {
+											"name": "street"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['suite']"
+										},
+										"sink": {
+											"name": "suite"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['city']"
+										},
+										"sink": {
+											"name": "city"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['zipcode']"
+										},
+										"sink": {
+											"name": "zipcode"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['geo']['lat']"
+										},
+										"sink": {
+											"name": "lat"
+										}
+									},
+									{
+										"source": {
+											"path": "$['address']['geo']['lng']"
+										},
+										"sink": {
+											"name": "lng"
+										}
+									},
+									{
+										"source": {
+											"path": "$['phone']"
+										},
+										"sink": {
+											"name": "phone"
+										}
+									},
+									{
+										"source": {
+											"path": "$['website']"
+										},
+										"sink": {
+											"name": "website"
+										}
+									},
+									{
+										"source": {
+											"path": "$['company']['name']"
+										},
+										"sink": {
+											"name": "company_name"
+										}
+									},
+									{
+										"source": {
+											"path": "$['company']['catchPhrase']"
+										},
+										"sink": {
+											"name": "catchPhrase"
+										}
+									},
+									{
+										"source": {
+											"path": "$['company']['bs']"
+										},
+										"sink": {
+											"name": "bs"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "rest_src_ds",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sqldb_dataset",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/rest_src_ds')]",
+				"[concat(variables('factoryId'), '/datasets/sqldb_dataset')]"
 			]
 		},
 		{
@@ -375,7 +579,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/RestResource1')]",
+			"name": "[concat(parameters('factoryName'), '/rest_src_ds')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -386,12 +590,33 @@
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
-					"relativeUrl": "objects?id=3&id=5&id=10"
+					"relativeUrl": "users"
 				},
 				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/rest_source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sqldb_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "json_db_dest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "stage",
+					"table": "users"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/json_db_dest')]"
 			]
 		},
 		{
@@ -465,6 +690,28 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/json_db_dest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('json_db_dest_properties_typeProperties_server')]",
+					"database": "[parameters('json_db_dest_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('json_db_dest_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('json_db_dest_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/rest_source')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -478,6 +725,36 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline4",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 1,
+						"startTime": "2025-03-06T08:42:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline4')]"
+			]
 		}
 	]
 }
