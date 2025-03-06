@@ -1,5 +1,5 @@
 {
-	"name": "RestResource1",
+	"name": "rest_src_ds",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "rest_source",
