@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'json_db_dest'"
 		},
+		"sql_db_sink_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sql_db_sink'"
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -66,6 +70,18 @@
 		"rest_source_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://jsonplaceholder.typicode.com/"
+		},
+		"sql_db_sink_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "eltdbserver.database.windows.net"
+		},
+		"sql_db_sink_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "eltdb"
+		},
+		"sql_db_sink_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sanjay"
 		},
 		"containerUri": {
 			"type": "string",
@@ -109,6 +125,9 @@
 					"json_db_dest_password": {
 						"value": "[parameters('json_db_dest_password')]"
 					},
+					"sql_db_sink_password": {
+						"value": "[parameters('sql_db_sink_password')]"
+					},
 					"AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
 					},
@@ -138,10 +157,39 @@
 					},
 					"rest_source_properties_typeProperties_url": {
 						"value": "[parameters('rest_source_properties_typeProperties_url')]"
+					},
+					"sql_db_sink_properties_typeProperties_server": {
+						"value": "[parameters('sql_db_sink_properties_typeProperties_server')]"
+					},
+					"sql_db_sink_properties_typeProperties_database": {
+						"value": "[parameters('sql_db_sink_properties_typeProperties_database')]"
+					},
+					"sql_db_sink_properties_typeProperties_userName": {
+						"value": "[parameters('sql_db_sink_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "eltadf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'eltadf_ArmTemplate_0')]"
+			]
 		}
 	]
 }

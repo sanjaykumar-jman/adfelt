@@ -20,6 +20,9 @@
 		"json_db_dest_password": {
 			"value": ""
 		},
+		"sql_db_sink_password": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
 		},
@@ -49,6 +52,15 @@
 		},
 		"rest_source_properties_typeProperties_url": {
 			"value": "https://jsonplaceholder.typicode.com/"
+		},
+		"sql_db_sink_properties_typeProperties_server": {
+			"value": "eltdbserver.database.windows.net"
+		},
+		"sql_db_sink_properties_typeProperties_database": {
+			"value": "eltdb"
+		},
+		"sql_db_sink_properties_typeProperties_userName": {
+			"value": "sanjay"
 		}
 	}
 }
