@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "objects?id=3&id=5&id=10"
+			"relativeUrl": "users"
 		},
 		"schema": []
 	}

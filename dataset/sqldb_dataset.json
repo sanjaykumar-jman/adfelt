@@ -1,0 +1,12 @@
+{
+	"name": "sqldb_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "json_db_dest",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
