@@ -1,0 +1,16 @@
+{
+	"name": "elt_db_ds3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_db_sink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "stage",
+			"table": "customers"
+		}
+	}
+}

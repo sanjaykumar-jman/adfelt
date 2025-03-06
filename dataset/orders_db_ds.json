@@ -1,0 +1,53 @@
+{
+	"name": "orders_db_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_db_sink",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Order ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Customer ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Order Line Item ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Product ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Order Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Last Modified Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Day",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "stage",
+			"table": "orders"
+		}
+	}
+}
