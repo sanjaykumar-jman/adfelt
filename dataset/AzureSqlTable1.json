@@ -5,6 +5,11 @@
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sink_params": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
@@ -29,7 +34,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "exchange_rates"
+			"table": {
+				"value": "@dataset().sink_params",
+				"type": "Expression"
+			}
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"

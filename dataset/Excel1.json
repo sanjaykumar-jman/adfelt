@@ -1,0 +1,28 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blob_storage_source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sheets_params": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().sheets_params",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "retail_sales_dataset.xlsx",
+				"container": "blobtosql"
+			}
+		},
+		"schema": []
+	}
+}
