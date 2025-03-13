@@ -29,6 +29,25 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/elt_db_ds1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "sql_db_sink",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "stage",
+					"table": "products"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/elt_db_ds2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -444,7 +463,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/elt_db_ds3')]",
-				"[concat(variables('factoryId'), '/datasets/elt_db_ds2')]"
+				"[concat(variables('factoryId'), '/datasets/elt_db_ds2')]",
+				"[concat(variables('factoryId'), '/datasets/elt_db_ds1')]"
 			]
 		},
 		{
@@ -780,10 +800,10 @@
 							"enableStaging": true,
 							"stagingSettings": {
 								"linkedServiceName": {
-									"referenceName": "azureblob_ls",
+									"referenceName": "azureblob_ls2",
 									"type": "LinkedServiceReference"
 								},
-								"path": "adf-snow"
+								"path": ""
 							}
 						},
 						"inputs": [

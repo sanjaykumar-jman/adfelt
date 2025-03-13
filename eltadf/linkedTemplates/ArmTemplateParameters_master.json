@@ -59,6 +59,9 @@
 		"azureblob_ls_sasUri": {
 			"value": ""
 		},
+		"azureblob_ls2_sasUri": {
+			"value": ""
+		},
 		"json_db_dest_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
 		},

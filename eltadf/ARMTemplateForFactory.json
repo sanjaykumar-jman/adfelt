@@ -79,6 +79,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'sasUri' of 'azureblob_ls'"
 		},
+		"azureblob_ls2_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'azureblob_ls2'"
+		},
 		"json_db_dest_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -432,10 +436,10 @@
 							"enableStaging": true,
 							"stagingSettings": {
 								"linkedServiceName": {
-									"referenceName": "azureblob_ls",
+									"referenceName": "azureblob_ls2",
 									"type": "LinkedServiceReference"
 								},
-								"path": "adf-snow"
+								"path": ""
 							}
 						},
 						"inputs": [
@@ -462,7 +466,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/customers_src_ds')]",
 				"[concat(variables('factoryId'), '/datasets/customers_dest_ds')]",
-				"[concat(variables('factoryId'), '/linkedServices/azureblob_ls')]"
+				"[concat(variables('factoryId'), '/linkedServices/azureblob_ls2')]"
 			]
 		},
 		{
@@ -815,8 +819,8 @@
 				"type": "SnowflakeV2Table",
 				"schema": [],
 				"typeProperties": {
-					"schema": "stage",
-					"table": "customers"
+					"schema": "STAGE",
+					"table": "CUSTOMERS"
 				}
 			},
 			"dependsOn": [
@@ -1379,6 +1383,19 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"sasUri": "[parameters('azureblob_ls_sasUri')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/azureblob_ls2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('azureblob_ls2_sasUri')]"
 				}
 			},
 			"dependsOn": []
