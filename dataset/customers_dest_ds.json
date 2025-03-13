@@ -1,0 +1,16 @@
+{
+	"name": "customers_dest_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "snowflake_dest_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "stage",
+			"table": "customers"
+		}
+	}
+}
