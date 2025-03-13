@@ -1,0 +1,21 @@
+{
+	"name": "AzurePostgreSql1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzurePostgreSql",
+		"version": "2.0",
+		"typeProperties": {
+			"server": "localhost",
+			"port": 5432,
+			"database": "miniproj",
+			"sslMode": 2,
+			"username": "postgres",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0Yjc5MDNlZS1mYmNhLTRjN2ItODQ4YS00ZjVkMDFhMDljNjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
