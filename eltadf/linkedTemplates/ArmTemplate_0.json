@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'json_db_dest'"
 		},
+		"snowflake_dest_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'snowflake_dest_ls'"
+		},
 		"sql_db_sink_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_db_sink'"
@@ -55,6 +59,10 @@
 			"type": "string",
 			"defaultValue": "sanjay"
 		},
+		"azureblob_ls_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'azureblob_ls'"
+		},
 		"json_db_dest_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -70,6 +78,18 @@
 		"rest_source_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://jsonplaceholder.typicode.com/"
+		},
+		"snowflake_dest_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "miniproj"
+		},
+		"snowflake_dest_ls_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "accountadmin"
+		},
+		"snowflake_dest_ls_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "EKZJIZK-ES98013.snowflakecomputing.com"
 		},
 		"sql_db_sink_properties_typeProperties_server": {
 			"type": "string",
@@ -146,6 +166,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/azureblob_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"sasUri": "[parameters('azureblob_ls_sasUri')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/blob_storage_source')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -196,6 +229,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/snowflake_dest_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SnowflakeV2",
+				"typeProperties": {
+					"authenticationType": "Basic",
+					"accountIdentifier": "ES98013",
+					"user": "sanjaykumar0909",
+					"database": "[parameters('snowflake_dest_ls_properties_typeProperties_database')]",
+					"warehouse": "compute_wh",
+					"role": "[parameters('snowflake_dest_ls_properties_typeProperties_role')]",
+					"host": "[parameters('snowflake_dest_ls_properties_typeProperties_host')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('snowflake_dest_ls_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/sql_db_sink')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -234,6 +290,16 @@
 						"timeZone": "India Standard Time"
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -384,6 +450,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/blob_storage_source')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/customers_dest_ds')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "snowflake_dest_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SnowflakeV2Table",
+				"schema": [],
+				"typeProperties": {
+					"schema": "stage",
+					"table": "customers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/snowflake_dest_ls')]"
 			]
 		},
 		{
@@ -600,171 +687,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/sql_db_sink')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/elt_db_ds2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sql_db_sink",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "stage",
-					"table": "countries"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_db_sink')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/elt_db_ds3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sql_db_sink",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "stage",
-					"table": "customers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_db_sink')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orders_db_ds')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "sql_db_sink",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Order ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customer ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Order Line Item ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Quantity",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Order Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Last Modified Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Day",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "stage",
-					"table": "orders"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/sql_db_sink')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/orders_ds')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_source",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "orders.csv",
-						"container": "adfassessmentcntr"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Order ID",
-						"type": "String"
-					},
-					{
-						"name": "Customer ID",
-						"type": "String"
-					},
-					{
-						"name": "Order Line Item ID",
-						"type": "String"
-					},
-					{
-						"name": "Product ID",
-						"type": "String"
-					},
-					{
-						"name": "Quantity",
-						"type": "String"
-					},
-					{
-						"name": "Order Date",
-						"type": "String"
-					},
-					{
-						"name": "Status",
-						"type": "String"
-					},
-					{
-						"name": "Last Modified Date",
-						"type": "String"
-					},
-					{
-						"name": "Day",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob_storage_source')]"
 			]
 		}
 	]

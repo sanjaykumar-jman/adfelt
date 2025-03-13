@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
+		"AzurePostgreSql1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzurePostgreSql1'"
+		},
 		"AzureSqlDatabase1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
@@ -27,9 +31,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'json_db_dest'"
 		},
+		"snowflake_dest_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'snowflake_dest_ls'"
+		},
 		"sql_db_sink_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_db_sink'"
+		},
+		"AzurePostgreSql1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "localhost"
+		},
+		"AzurePostgreSql1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "miniproj"
+		},
+		"AzurePostgreSql1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
@@ -55,6 +75,10 @@
 			"type": "string",
 			"defaultValue": "sanjay"
 		},
+		"azureblob_ls_sasUri": {
+			"type": "secureString",
+			"metadata": "Secure string for 'sasUri' of 'azureblob_ls'"
+		},
 		"json_db_dest_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "eltdbserver.database.windows.net"
@@ -70,6 +94,18 @@
 		"rest_source_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://jsonplaceholder.typicode.com/"
+		},
+		"snowflake_dest_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "miniproj"
+		},
+		"snowflake_dest_ls_properties_typeProperties_role": {
+			"type": "string",
+			"defaultValue": "accountadmin"
+		},
+		"snowflake_dest_ls_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "EKZJIZK-ES98013.snowflakecomputing.com"
 		},
 		"sql_db_sink_properties_typeProperties_server": {
 			"type": "string",
@@ -125,6 +161,9 @@
 					"json_db_dest_password": {
 						"value": "[parameters('json_db_dest_password')]"
 					},
+					"snowflake_dest_ls_password": {
+						"value": "[parameters('snowflake_dest_ls_password')]"
+					},
 					"sql_db_sink_password": {
 						"value": "[parameters('sql_db_sink_password')]"
 					},
@@ -146,6 +185,9 @@
 					"AzureSqlDatabase2_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]"
 					},
+					"azureblob_ls_sasUri": {
+						"value": "[parameters('azureblob_ls_sasUri')]"
+					},
 					"json_db_dest_properties_typeProperties_server": {
 						"value": "[parameters('json_db_dest_properties_typeProperties_server')]"
 					},
@@ -157,6 +199,15 @@
 					},
 					"rest_source_properties_typeProperties_url": {
 						"value": "[parameters('rest_source_properties_typeProperties_url')]"
+					},
+					"snowflake_dest_ls_properties_typeProperties_database": {
+						"value": "[parameters('snowflake_dest_ls_properties_typeProperties_database')]"
+					},
+					"snowflake_dest_ls_properties_typeProperties_role": {
+						"value": "[parameters('snowflake_dest_ls_properties_typeProperties_role')]"
+					},
+					"snowflake_dest_ls_properties_typeProperties_host": {
+						"value": "[parameters('snowflake_dest_ls_properties_typeProperties_host')]"
 					},
 					"sql_db_sink_properties_typeProperties_server": {
 						"value": "[parameters('sql_db_sink_properties_typeProperties_server')]"
@@ -184,6 +235,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzurePostgreSql1_password": {
+						"value": "[parameters('AzurePostgreSql1_password')]"
+					},
+					"AzurePostgreSql1_properties_typeProperties_server": {
+						"value": "[parameters('AzurePostgreSql1_properties_typeProperties_server')]"
+					},
+					"AzurePostgreSql1_properties_typeProperties_database": {
+						"value": "[parameters('AzurePostgreSql1_properties_typeProperties_database')]"
+					},
+					"AzurePostgreSql1_properties_typeProperties_username": {
+						"value": "[parameters('AzurePostgreSql1_properties_typeProperties_username')]"
 					}
 				}
 			},

@@ -8,6 +8,9 @@
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
+		"AzurePostgreSql1_password": {
+			"value": ""
+		},
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
@@ -20,8 +23,20 @@
 		"json_db_dest_password": {
 			"value": ""
 		},
+		"snowflake_dest_ls_password": {
+			"value": ""
+		},
 		"sql_db_sink_password": {
 			"value": ""
+		},
+		"AzurePostgreSql1_properties_typeProperties_server": {
+			"value": "localhost"
+		},
+		"AzurePostgreSql1_properties_typeProperties_database": {
+			"value": "miniproj"
+		},
+		"AzurePostgreSql1_properties_typeProperties_username": {
+			"value": "postgres"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
@@ -41,6 +56,9 @@
 		"AzureSqlDatabase2_properties_typeProperties_userName": {
 			"value": "sanjay"
 		},
+		"azureblob_ls_sasUri": {
+			"value": ""
+		},
 		"json_db_dest_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
 		},
@@ -52,6 +70,15 @@
 		},
 		"rest_source_properties_typeProperties_url": {
 			"value": "https://jsonplaceholder.typicode.com/"
+		},
+		"snowflake_dest_ls_properties_typeProperties_database": {
+			"value": "miniproj"
+		},
+		"snowflake_dest_ls_properties_typeProperties_role": {
+			"value": "accountadmin"
+		},
+		"snowflake_dest_ls_properties_typeProperties_host": {
+			"value": "EKZJIZK-ES98013.snowflakecomputing.com"
 		},
 		"sql_db_sink_properties_typeProperties_server": {
 			"value": "eltdbserver.database.windows.net"
