@@ -28,10 +28,10 @@
 					"enableStaging": true,
 					"stagingSettings": {
 						"linkedServiceName": {
-							"referenceName": "azureblob_ls",
+							"referenceName": "azureblob_ls2",
 							"type": "LinkedServiceReference"
 						},
-						"path": "adf-snow"
+						"path": ""
 					}
 				},
 				"inputs": [

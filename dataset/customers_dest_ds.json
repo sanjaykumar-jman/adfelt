@@ -9,8 +9,8 @@
 		"type": "SnowflakeV2Table",
 		"schema": [],
 		"typeProperties": {
-			"schema": "stage",
-			"table": "customers"
+			"schema": "STAGE",
+			"table": "CUSTOMERS"
 		}
 	}
 }
