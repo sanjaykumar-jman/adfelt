@@ -29,7 +29,7 @@
 		],
 		"typeProperties": {
 			"schema": "public",
-			"table": "customers"
+			"table": "customer_country"
 		}
 	}
 }
