@@ -311,6 +311,27 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/trigger2')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 2,
+						"startTime": "2025-03-06T13:00:00",
+						"endTime": "2025-03-06T13:12:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -483,7 +504,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "STAGE",
-					"table": "CUSTOMERS"
+					"table": "CUSTOMER_COUNTRY"
 				}
 			},
 			"dependsOn": [
@@ -628,55 +649,6 @@
 					},
 					{
 						"name": "Prop_13",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/blob_storage_source')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/elt_csv_ds3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "blob_storage_source",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Customer.csv",
-						"container": "adfassessmentcntr"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Customer ID",
-						"type": "String"
-					},
-					{
-						"name": "Customer name",
-						"type": "String"
-					},
-					{
-						"name": "Gender",
-						"type": "String"
-					},
-					{
-						"name": "Age",
-						"type": "String"
-					},
-					{
-						"name": "Country",
 						"type": "String"
 					}
 				]
